@@ -8,8 +8,11 @@ Hunting for chrome extensions!
 
 ## Commands
 `help` - Show help message
+
 `hunt [URL]` - All in one function
+
 `download [URL]` - Download a chrome extension
+
 `unzip [Extension.crx]` - Unzip a chrome extension
 
 ## Example

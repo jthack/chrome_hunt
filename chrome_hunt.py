@@ -1,8 +1,9 @@
 # Chrome Hunt - @th3_protoCOL
 import re
 import cmd
-import requests
 import zipfile
+import requests
+from bs4 import BeautifulSoup
 from pyfiglet import Figlet
 
 class Chrome_Hunt(cmd.Cmd):
@@ -36,6 +37,22 @@ class Chrome_Hunt(cmd.Cmd):
             output = output+".crx"
         self.download(arg, output)
         self.unzip(output)
+
+    def do_spider(self, arg):
+        print("[*] Requesting chrome store content")
+        # Set headers
+        headers = requests.utils.default_headers()
+        headers.update({ 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'})
+        response = requests.get("https://chrome.google.com/webstore/category/extensions", headers)
+
+        # Regex for URLs on homepage
+        urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', response.text)
+        extensions = []
+        for link in urls:
+            if "https://chrome.google.com/webstore/detail" in link:
+                extensions.append(link)
+        for e in extensions:
+            print("[*] Found Extension: "+e)
 
     def do_exit(self, line):
         "Exit the program"

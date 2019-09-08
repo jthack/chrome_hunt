@@ -14,7 +14,6 @@ class Chrome_Hunt(cmd.Cmd):
         self.prompt = '[>] '
         fig = Figlet(font='slant')
         print(fig.renderText('ChromeHunt'))
-        #print(fig.renderText(''))
         print("\t\t\t@th3_protoCOL")
 
     def do_download(self, arg):

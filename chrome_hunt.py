@@ -52,9 +52,9 @@ class Chrome_Hunt(cmd.Cmd):
         exit(1)
 
     def download(self, url, name="extension.crx"):
-        extention_id = url.rsplit('/',1)[1]     # Parse the extention id from url
-        download_url = 'https://clients2.google.com/service/update2/crx?response=redirect&prodversion=49.0&acceptformat=crx3&x=id%3D'+extention_id+'%26installsource%3Dondemand%26uc'    # Download .crx
-        print("[*] Downloading extension with id: "+extention_id)
+        extension_id = url.rsplit('/',1)[1]     # Parse the extension id from url
+        download_url = 'https://clients2.google.com/service/update2/crx?response=redirect&prodversion=49.0&acceptformat=crx3&x=id%3D'+extension_id+'%26installsource%3Dondemand%26uc'    # Download .crx
+        print("[*] Downloading extension with id: "+extension_id)
         r = requests.get(download_url, allow_redirects=True)
         if r.status_code == 200:
             open(name, 'wb').write(r.content)
@@ -84,7 +84,7 @@ class Chrome_Hunt(cmd.Cmd):
             else:
                 print("\033[91m[-]\033[1;0m Downloads: "+str(download_count)+"")
             print("[*] Link: "+link+"\n[ ]")
-            # Search for releated extentions url on repsonse page. we will likely have to worry about dups later on.
+            # Search for releated extension urls on repsonse page. we will likely have to worry about dups later on.
             new_extensions.append(self.parse_urls(response))
         # Parse the new extensions!
         self.parse_detail(extensions)

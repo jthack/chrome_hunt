@@ -8,6 +8,7 @@ from pyfiglet import Figlet
 
 class Chrome_Hunt(cmd.Cmd):
     """Hunt for chrome extension! Made by @th3_protoCOL"""
+    found_extensions = []
 
     def __init__(self):
         cmd.Cmd.__init__(self)
@@ -84,9 +85,11 @@ class Chrome_Hunt(cmd.Cmd):
                 print("\033[91m[-]\033[1;0m Downloads: "+str(download_count)+"")
             print("[*] Link: "+link+"\n[ ]")
             # Search for releated extension urls on repsonse page. we will likely have to worry about dups later on.
-            new_extensions.append(self.parse_urls(response))
+            if name not in self.found_extensions:
+                self.found_extensions.append(name)
+                new_extensions.append(self.parse_urls(response))
         # Parse the new extensions!
-        self.parse_detail(extensions)
+        self.parse_detail(new_extensions)
 
     def parse_urls(self, response):
         # Regex for URLs on homepage
